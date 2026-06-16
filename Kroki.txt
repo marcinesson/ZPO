@@ -22,8 +22,81 @@ spring.mvc.hiddenmethod.filter.enabled=true
 5. Set -> Nie pozwala na duplikaty, List -> Pozwala na duplikaty, .stream() -> Najlepiej działa z List.
 Stwórz Modele potrzebnych obiektów (np. dla pizzerii to toppings i pizza)
 
-6. Stworzenie repository, Muszą być intrefejsami! - one kontaktuja sie z baza danych.
+6. Stworzenie repository, Muszą być intrefejsami! - one kontaktuja sie z baza danych. extends JpaRepository<CzegoToRepo, typId>
 
-7. Service -> głowa aplikacji, tam robisz algorytm.
+7. Service -> głowa aplikacji, tam robisz algorytm. Na górze @RequiredArgsConstructor, @Service oraz wstrzyknięcie repository
+Do operacji zmieniających dane @Transactional (wszystkie oprócz READów).
 
 8. Controller -> Przedstawianie danych na stronie, 
+
+OneToOne:
+Kiedy używamy: Kiedy jeden obiekt należy tylko i wyłącznie do jednego drugiego obiektu.
+Przykład z życia: Człowiek i jego dowód osobisty. Człowiek ma jeden dowód, ten dowód należy do jednego człowieka.
+
+Kod:
+@Entity
+public class Person {
+    @Id
+    private Long id;
+    private String name;
+
+    // LINIA 1: Mówimy Springowi: "Ten obiekt ma relację 1 do 1 z Dowodem"
+    @OneToOne 
+    // LINIA 2: Tworzy fizyczną kolumnę w tabeli 'person' o nazwie 'id_card_id'
+    @JoinColumn(name = "id_card_id") 
+    private IdCard idCard;
+}
+
+@Entity
+public class IdCard {
+    @Id
+    private Long id;
+    private String number;
+    // Tutaj często nie dajemy żadnej adnotacji relacji, bo "właścicielem" połączenia jest Person.
+}
+
+ManyToOne/OneToMany:
+Kiedy używamy: To najważniejsza relacja w aplikacjach.
+Przykład z życia (Twój projekt): Wielu Klientów może mieć Wiele Zgłoszeń (Ticket), ale jedno konkretne Zgłoszenie należy do Jednego Klienta.
+
+Kod:
+Strona 1: Ticket (Ona posiada Klucz Obcy)
+@Entity
+public class Ticket {
+    @Id
+    private Long id;
+    private String description;
+
+    // LINIA 1: Wiele Zgłoszeń może należeć do Jednego Użytkownika
+    @ManyToOne 
+    // LINIA 2: Tworzy w tabeli 'ticket' kolumnę 'client_id'
+    @JoinColumn(name = "client_id") 
+    private User client;
+}
+
+Strona 2: User (On chce mieć tylko podgląd na listę swoich zgłoszeń)
+@Entity
+public class User {
+    @Id
+    private Long id;
+    private String login;
+
+    // LINIA 3: Jeden Użytkownik ma Wiele Zgłoszeń.
+    // LINIA 4: mappedBy="client" to magiczne słowo! Oznacza: 
+    // "Hej bazo danych, nie twórz tu żadnej nowej kolumny! 
+    // Relacja jest już zapisana w klasie Ticket w zmiennej o nazwie 'client'".
+	@OneToMany(mappedBy = "client") 
+	private List<Ticket> tickets = new ArrayList<>();
+}
+
+ManyToMany:
+Kiedy używamy: Kiedy obie strony mogą mieć wiele elementów z drugiej grupy.
+Przykład z życia: Zgłoszenie (Ticket) ma wiele Usług (ServiceTask np. czyszczenie, pasta), a Usługa może być przypisana do wielu Zgłoszeń.
+
+Kod:
+@ManyToMany
+    @JoinTable(name = "ticket_services", // nazwa tabeli
+        joinColumns = @JoinColumn(name = "ticket_id"),
+        inverseJoinColumns = @JoinColumn(name = "service_task_id") // wskazanie na id obu tabel i laczenie ich
+    )
+    private Set<ServiceTask> tasks = new HashSet<>();
