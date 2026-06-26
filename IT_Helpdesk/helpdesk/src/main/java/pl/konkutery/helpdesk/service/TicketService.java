@@ -142,6 +142,5 @@ public class TicketService {
                 .sum();
 
         return totalTime;
-        // Zgerypka
     }
 }
