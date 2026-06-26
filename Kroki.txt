@@ -1,7 +1,7 @@
 1. Stworzenie spring project -> GroupId (nazwa domeny na odwrót)-> ArtificialId (nazwa samego projektu np. Pizzeria) 
 -> Version (21 najbezpieczniej) -> Jar
 
-2. Wybór dependencies: Spring Web, Thymeleaf, Spring Data JPA SQL, PostgreSQL Driver, Spring Security, Lombok
+2. Wybór dependencies: Spring Web, Vaadin, Spring Data JPA SQL, PostgreSQL Driver, Spring Security, Lombok
 
 3. W folderze java/GroupId/ArtificialId stwórz: Model (Klasy reprerzentujące tabele w bazie np. składniki), 
 Repository (Interfejsy do komunikacji z bazą danych,
