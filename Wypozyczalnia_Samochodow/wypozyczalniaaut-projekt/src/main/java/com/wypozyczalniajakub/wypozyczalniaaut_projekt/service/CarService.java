@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.wypozyczalniajakub.wypozyczalniaaut_projekt.model.Car;
 import com.wypozyczalniajakub.wypozyczalniaaut_projekt.repositories.CarRepository;
-import com.wypozyczalniajakub.wypozyczalniaaut_projekt.repositories.ReservationRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class CarService {
     private final CarRepository carRepository;
-    private final ReservationRepository reservationRepository;
 
     @Transactional
     public void deleteOrDisableCar(Long id) {
@@ -29,7 +27,7 @@ public class CarService {
         car.getReservations().stream()
                 .filter(reservation -> !reservation.getEndDate().isBefore(LocalDate.now()))
                 .findAny()
-                .ifPresent(res -> {
+                .ifPresent(reservation -> {
                     throw new IllegalStateException("Car has an active or planned reservation, can't delete it.");
                 });
 
@@ -62,5 +60,13 @@ public class CarService {
 
     public List<Car> getAvailableCars(LocalDate starDate, LocalDate endDate) {
         return carRepository.findAvailableCars(starDate, endDate);
+    }
+
+    public Car getCarById(Long id) {
+        return carRepository.findById(id).orElseThrow(() -> new RuntimeException("Can't find a car with an id: " + id));
+    }
+
+    public Car addNewCar(Car car) {
+        return carRepository.save(car);
     }
 }

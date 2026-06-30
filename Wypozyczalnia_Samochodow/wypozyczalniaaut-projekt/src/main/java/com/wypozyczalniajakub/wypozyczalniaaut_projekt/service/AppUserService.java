@@ -14,18 +14,16 @@ import lombok.RequiredArgsConstructor;
 public class AppUserService {
     private final AppUserRepository appUserRepository;
 
-    public AppUser getLoggedInUser(AppUser user) {
+    @SuppressWarnings("null")
+    public AppUser getLoggedInUser() {
         // Pobranie danych o zalogowanym użytkowniku
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Zabezpieczenie - czy w ogóle jest zalogowany
-        if (authentication == null || !authentication.isAuthenticated() || authentication.getPrincipal().equals("anonymousUser")) {
-            throw new RuntimeException("No user is logged in.");
-        }
 
-        // Pobranie loginu (domyślnie pod nazwą name)
-        String currentLogin = authentication.getName();
-        // Szukanie użytkownika w bazie custom metodą z repo
-        return appUserRepository.findByLogin(currentLogin)
-        .orElseThrow(() -> new RuntimeException("User with the login: " + currentLogin + " can't be found."));
+        return java.util.Optional.ofNullable(authentication)
+                .filter(Authentication::isAuthenticated)
+                .filter(auth -> !"anonymousUser".equals(auth.getPrincipal()))
+                .map(Authentication::getName)
+                .flatMap(appUserRepository::findByLogin)
+                .orElseThrow(() -> new RuntimeException("No user is logged in."));
     }
 }

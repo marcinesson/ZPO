@@ -101,3 +101,31 @@ Kod:
         inverseJoinColumns = @JoinColumn(name = "service_task_id") // wskazanie na id obu tabel i laczenie ich
     )
     private Set<ServiceTask> tasks = new HashSet<>();
+
+Kolejność:
+Modele / Encje
+Car, Reservation, AppUser, UserRole.
+
+Repozytoria
+CarRepository, ReservationRepository, AppUserRepository.
+
+Security + użytkownicy
+Logowanie, role, pobieranie aktualnego użytkownika. (AppUser, UserRole, findByLogin, securityconfig, getLoggedinuser)
+
+Serwisy biznesowe
+Logika aut, rezerwacji, dostępności, ceny.
+
+Algorytm ceny + test jednostkowy
+Zwyżki, zniżki, liczba dni, walidacja.
+
+Endpointy REST
+Szczególnie POST /reservations, lista aut, moje rezerwacje, admin.
+
+Swagger
+Dokumentacja endpointów.
+
+UI
+Proste widoki: dostępne auta, rezerwacja, moje rezerwacje, panel admina.
+
+Test całości ręcznie
+Admin, klient, rezerwacja, blokada zajętych terminów.
