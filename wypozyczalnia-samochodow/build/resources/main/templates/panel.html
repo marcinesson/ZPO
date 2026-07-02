@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Wypożyczalnia</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+
+<div style="text-align: right;">
+    <form action="/logout" method="post" style="display: inline;">
+        <button type="submit" style="background-color: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            Wyloguj się
+        </button>
+    </form>
+</div>
+
+<h1>Witaj w wypożyczalni!</h1>
+
+<h3>Nowa rezerwacja</h3>
+<form action="/api/reservations" method="POST" th:object="${newReservation}">
+
+    <label>Wybierz auto (zacznij pisać):</label>
+    <input list="carOptions" name="car.id" required>
+    <datalist id="carOptions">
+        <option th:each="car : ${cars}" th:value="${car.id}" th:text="${car.brand + ' ' + car.model + ' (' + car.pricePerDay + ' PLN)'}"></option>
+    </datalist>
+    <br><br>
+
+    Data od: <input type="date" th:field="*{startDate}" required><br><br>
+    Data do: <input type="date" th:field="*{endDate}" required><br><br>
+    Młody kierowca? <input type="checkbox" th:field="*{youngDriver}"><br><br>
+
+    <button type="submit" style="background-color: #007bff; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">
+        Rezerwuj
+    </button>
+</form>
+
+<hr style="margin-top: 30px; margin-bottom: 30px;">
+
+<h3>Twoje rezerwacje (lub wszystkie, jeśli jesteś adminem)</h3>
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <tr style="background-color: #f2f2f2;">
+        <th style="padding: 8px;">Użytkownik</th>
+        <th style="padding: 8px;">Auto</th>
+        <th style="padding: 8px;">Od</th>
+        <th style="padding: 8px;">Do</th>
+        <th style="padding: 8px;">Koszt całkowity</th>
+    </tr>
+    <tr th:each="res : ${reservations}">
+        <td style="padding: 8px;" th:text="${res.username}"></td>
+        <td style="padding: 8px;" th:text="${res.car.brand + ' ' + res.car.model}"></td>
+        <td style="padding: 8px;" th:text="${res.startDate}"></td>
+        <td style="padding: 8px;" th:text="${res.endDate}"></td>
+        <td style="padding: 8px;" th:text="${res.totalCost} + ' PLN'"></td>
+    </tr>
+</table>
+</body>
+</html>
