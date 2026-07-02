@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Klinika Weterynaryjna</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px;">
+
+<div style="text-align: right;">
+    <form action="/logout" method="post">
+        <button type="submit" style="background-color: #dc3545; color: white; padding: 8px;">Wyloguj się</button>
+    </form>
+</div>
+
+<h1>Klinika Weterynaryjna "Cztery Łapy"</h1>
+
+<div th:if="${error}" style="color: red; font-weight: bold; padding: 10px; border: 1px solid red; margin-bottom: 15px;" th:text="${error}"></div>
+<div th:if="${success}" style="color: green; font-weight: bold; padding: 10px; border: 1px solid green; margin-bottom: 15px;" th:text="${success}"></div>
+
+<div th:if="${!isAdmin}">
+    <h3>Umów nową wizytę</h3>
+    <form action="/book" method="POST" th:object="${newAppointment}">
+
+        <label>Wybierz lekarza:</label>
+        <select name="vetId" required style="padding: 5px; width: 100%; max-width: 300px;">
+            <option value="" disabled selected>-- Wybierz z listy --</option>
+            <option th:each="vet : ${vets}" th:value="${vet.id}" th:text="${vet.fullName + ' - ' + vet.specialization}"></option>
+        </select>
+        <br><br>
+
+        Początek wizyty: <input type="datetime-local" th:field="*{startTime}" required><br><br>
+        Koniec wizyty: <input type="datetime-local" th:field="*{endTime}" required><br><br>
+
+        <button type="submit" style="background-color: #007bff; color: white; padding: 10px;">Zarezerwuj termin</button>
+    </form>
+</div>
+
+<hr style="margin: 30px 0;">
+
+<h3 th:text="${isAdmin ? 'PANEL ADMINISTRATORA - Wszystkie wizyty' : 'Twoje nadchodzące wizyty'}"></h3>
+<table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+    <tr style="background-color: #f2f2f2;">
+        <th>Właściciel zwierzęcia</th>
+        <th>Lekarz</th>
+        <th>Data i czas rozpoczęcia</th>
+        <th>Data i czas zakończenia</th>
+    </tr>
+    <tr th:each="appt : ${appointments}">
+        <td style="padding: 8px;" th:text="${appt.username}"></td>
+        <td style="padding: 8px;" th:text="${appt.vet.fullName + ' (' + appt.vet.specialization + ')'}"></td>
+        <td style="padding: 8px;" th:text="${#temporals.format(appt.startTime, 'dd-MM-yyyy HH:mm')}"></td>
+        <td style="padding: 8px;" th:text="${#temporals.format(appt.endTime, 'dd-MM-yyyy HH:mm')}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

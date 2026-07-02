@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Podsumowanie Finansowe</title>
+</head>
+<body>
+<h2>Raport Finansowy Lekarza</h2>
+<p>
+    Miesięczny przychód dla wybranego weterynarza wynosi:
+    <strong th:text="${totalRevenue} + ' PLN'">0 PLN</strong>
+</p>
+
+<h3>Składowe wizyty:</h3>
+<ul>
+    <li th:each="app : ${appointments}"
+        th:text="${app.date} + ' - ' + ${app.type} + ' (' + ${app.type.price} + ' PLN)'">
+    </li>
+</ul>
+</body>
+</html>
