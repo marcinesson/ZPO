@@ -1,0 +1,1 @@
+package pl.serwiskomputerowy.serwis.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.serwiskomputerowy.serwis.model.TechnicianSlot; public interface TechnicianSlotRepository extends JpaRepository<TechnicianSlot, Long> { }

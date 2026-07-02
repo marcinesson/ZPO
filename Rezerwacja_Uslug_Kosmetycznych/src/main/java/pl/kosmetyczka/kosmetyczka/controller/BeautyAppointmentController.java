@@ -1,0 +1,36 @@
+package pl.kosmetyczka.kosmetyczka.controller;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.*;
+import lombok.RequiredArgsConstructor;
+import pl.kosmetyczka.kosmetyczka.model.BeautyServiceType;
+import pl.kosmetyczka.kosmetyczka.model.BeautyAppointment;
+import pl.kosmetyczka.kosmetyczka.service.BeautyAppointmentService;
+
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/beauty")
+public class BeautyAppointmentController {
+    private final BeautyAppointmentService service;
+
+    @PostMapping
+    public String create(@RequestParam BeautyServiceType category,
+            @RequestParam int requiredCapacity,
+            @RequestParam int minQuality,
+            @RequestParam int taskUnits,
+            @RequestParam int priority,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startTime,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) {
+        BeautyAppointment record = service.createRecord(category, requiredCapacity, minQuality,
+                taskUnits, priority, startTime, endTime);
+        return "Created id: " + record.getId() + ", price: " + record.getTotalPrice()
+                + ", score: " + record.getScore();
+    }
+
+    @GetMapping("/all")
+    public List<BeautyAppointment> all() {
+        return service.getAllRecords();
+    }
+}

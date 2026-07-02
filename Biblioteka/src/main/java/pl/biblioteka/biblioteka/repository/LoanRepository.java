@@ -1,0 +1,1 @@
+package pl.biblioteka.biblioteka.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.biblioteka.biblioteka.model.Loan; public interface LoanRepository extends JpaRepository<Loan, Long> { }

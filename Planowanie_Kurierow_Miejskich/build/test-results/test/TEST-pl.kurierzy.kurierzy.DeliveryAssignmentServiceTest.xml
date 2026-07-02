@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="pl.kurierzy.kurierzy.DeliveryAssignmentServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2026-07-02T20:11:30.128Z" hostname="SWAGGER123" time="0.598">
+  <properties/>
+  <testcase name="shouldRejectWhenTimeWindowIsTooShort()" classname="pl.kurierzy.kurierzy.DeliveryAssignmentServiceTest" time="0.577"/>
+  <testcase name="shouldCalculateStartedRequiredHoursAndPrice()" classname="pl.kurierzy.kurierzy.DeliveryAssignmentServiceTest" time="0.004"/>
+  <testcase name="shouldChooseBestScoredResource()" classname="pl.kurierzy.kurierzy.DeliveryAssignmentServiceTest" time="0.003"/>
+  <testcase name="shouldSkipOverlappingBetterResource()" classname="pl.kurierzy.kurierzy.DeliveryAssignmentServiceTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\qbast\.gradle\caches\modules-2\files-2.1\net.bytebuddy\byte-buddy-agent\1.18.10\9426d28828bdcdf42666bb7a68c468279ea78f59\byte-buddy-agent-1.18.10.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+]]></system-err>
+</testsuite>

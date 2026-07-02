@@ -1,0 +1,22 @@
+package pl.myjnia.myjnia.repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import pl.myjnia.myjnia.model.WashReservation;
+
+public interface WashReservationRepository extends JpaRepository<WashReservation, Long> {
+    List<WashReservation> findByUserId(Long userId);
+
+    @Query("""
+            select count(record) > 0 from WashReservation record
+            where record.resource.id = :resourceId
+            and record.startTime < :endTime
+            and record.endTime > :startTime
+            """)
+    boolean existsOverlapping(@Param("resourceId") Long resourceId,
+            @Param("startTime") LocalDateTime startTime,
+            @Param("endTime") LocalDateTime endTime);
+}

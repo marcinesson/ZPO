@@ -1,0 +1,7 @@
+package pl.rezerwacjasal.rezerwacjasal.repository;
+import java.util.*; import org.springframework.data.jpa.repository.JpaRepository;
+import pl.rezerwacjasal.rezerwacjasal.model.*;
+public interface AppUserRepository extends JpaRepository<AppUser, Long> {
+    Optional<AppUser> findByLogin(String login);
+    List<AppUser> findByRole(UserRole role);
+}

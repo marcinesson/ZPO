@@ -1,0 +1,1 @@
+package pl.szkielet.szkielet.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.szkielet.szkielet.model.MainRecord; public interface MainRecordRepository extends JpaRepository<MainRecord, Long> { }

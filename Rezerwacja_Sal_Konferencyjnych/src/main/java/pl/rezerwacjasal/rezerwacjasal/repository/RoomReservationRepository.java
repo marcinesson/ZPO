@@ -1,0 +1,1 @@
+package pl.rezerwacjasal.rezerwacjasal.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.rezerwacjasal.rezerwacjasal.model.RoomReservation; public interface RoomReservationRepository extends JpaRepository<RoomReservation, Long> { }

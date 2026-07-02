@@ -1,0 +1,1 @@
+package pl.serwiskomputerowy.serwis.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.serwiskomputerowy.serwis.model.RepairTicket; public interface RepairTicketRepository extends JpaRepository<RepairTicket, Long> { }

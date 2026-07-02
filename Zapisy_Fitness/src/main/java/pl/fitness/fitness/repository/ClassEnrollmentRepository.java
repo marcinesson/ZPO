@@ -1,0 +1,1 @@
+package pl.fitness.fitness.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.fitness.fitness.model.ClassEnrollment; public interface ClassEnrollmentRepository extends JpaRepository<ClassEnrollment, Long> { }

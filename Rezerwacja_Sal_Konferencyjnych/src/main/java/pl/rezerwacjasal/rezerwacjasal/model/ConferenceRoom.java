@@ -1,0 +1,1 @@
+package pl.rezerwacjasal.rezerwacjasal.model; import java.math.BigDecimal; import jakarta.persistence.*; import lombok.*; @Entity @Data @NoArgsConstructor @AllArgsConstructor public class ConferenceRoom { @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private Long id; private String name; private int capacity; private BigDecimal pricePerHour; }

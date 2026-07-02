@@ -1,0 +1,1 @@
+package pl.stoliki.stoliki.repository; import org.springframework.data.jpa.repository.JpaRepository; import pl.stoliki.stoliki.model.TableReservation; public interface TableReservationRepository extends JpaRepository<TableReservation, Long> { }
