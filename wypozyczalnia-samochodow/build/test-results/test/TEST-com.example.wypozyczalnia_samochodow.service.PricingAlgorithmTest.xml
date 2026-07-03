@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.example.wypozyczalnia_samochodow.service.PricingAlgorithmTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-06-27T20:32:30.162Z" hostname="Mac.home" time="0.017">
-  <properties/>
-  <testcase name="shouldApply10PercentDiscountFor4Days()" classname="com.example.wypozyczalnia_samochodow.service.PricingAlgorithmTest" time="0.012"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
